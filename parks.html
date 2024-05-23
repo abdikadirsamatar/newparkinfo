@@ -16,7 +16,7 @@
     }
 
     header {
-      background-color: #007bff;
+      background-color: #040505;
       color: #fff;
       padding: 1rem 0;
       text-align: center;
@@ -52,7 +52,7 @@
       background-color: #fff;
       padding: 2rem;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(3, 2, 2, 0.1);
       max-width: 600px;
       width: 100%;
       text-align: center;
@@ -84,7 +84,7 @@
     .search button {
       margin-top: 1rem;
       padding: 0.5rem 1rem;
-      background-color: #007bff;
+      background-color: #020303;
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -92,7 +92,7 @@
     }
 
     .search button:hover {
-      background-color: #0056b3;
+      background-color: #806363;
     }
 
     #results {
@@ -105,14 +105,10 @@
     footer {
       text-align: center;
       padding: 1rem 0;
-      background-color: #007bff;
+      background-color: #000000;
       color: #fff;
     }
   </style>
-  <script defer src="js/locationData.js"></script>
-  <script defer src="js/parkTypeData.js"></script>
-  <script defer src="js/nationalParkData.js"></script>
-  <script defer src="js/script.js"></script>
 </head>
 <body>
   <header>
@@ -145,7 +141,118 @@
     </section>
   </main>
   <footer>
-    <p>&copy; 2024 Outdoor Activities Finder. All rights reserved.</p>
+    <p>2024 Outdoor Activities Finder.</p>
   </footer>
+
+  <script>
+    const locationsArray = [
+      "Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California",
+      "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia",
+      "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+      "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
+      "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+      "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+      "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina",
+      "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia",
+      "Washington", "West Virginia", "Wisconsin", "Wyoming"
+    ];
+
+    const stateParksArray = {
+      "Alabama": ["Cheaha State Park", "DeSoto State Park", "Gulf State Park"],
+      "Alaska": ["Chugach State Park", "Denali State Park", "Kachemak Bay State Park"],
+      "American Samoa": ["Le'ala Shoreline National Natural Landmark", "Ofu Beach"],
+      "Arizona": ["Kartchner Caverns State Park", "Red Rock State Park", "Slide Rock State Park"],
+      "Arkansas": ["Devil's Den State Park", "Petit Jean State Park", "Ozark Folk Center State Park"],
+      "California": ["Anza-Borrego Desert State Park", "Julia Pfeiffer Burns State Park", "Lake Tahoe State Park"],
+      "Colorado": ["Eldorado Canyon State Park", "Golden Gate Canyon State Park", "Roxborough State Park"],
+      "Connecticut": ["Dinosaur State Park", "Gillette Castle State Park", "Sleeping Giant State Park"],
+      "Delaware": ["Cape Henlopen State Park", "Lums Pond State Park", "Trap Pond State Park"],
+      "District of Columbia": ["Rock Creek Park"],
+      "Florida": ["Bahia Honda State Park", "Everglades National Park", "Myakka River State Park"],
+      "Georgia": ["Amicalola Falls State Park", "Cloudland Canyon State Park", "Tallulah Gorge State Park"],
+      "Guam": ["Ritidian Point", "War in the Pacific National Historical Park"],
+      "Hawaii": ["Haleakala National Park", "Hapuna Beach State Recreation Area", "Waimea Canyon State Park"],
+      "Idaho": ["Bruneau Dunes State Park", "Farragut State Park", "Ponderosa State Park"],
+      "Illinois": ["Giant City State Park", "Starved Rock State Park", "White Pines Forest State Park"],
+      "Indiana": ["Brown County State Park", "Indiana Dunes State Park", "Turkey Run State Park"],
+      "Iowa": ["Backbone State Park", "Ledges State Park", "Maquoketa Caves State Park"],
+      "Kansas": ["Cedar Bluff State Park", "Kanopolis State Park", "Wilson State Park"],
+      "Kentucky": ["Cumberland Falls State Resort Park", "Natural Bridge State Resort Park", "Red River Gorge"],
+      "Louisiana": ["Bayou Segnette State Park", "Chicot State Park", "Lake Fausse Pointe State Park"],
+      "Maine": ["Acadia National Park", "Baxter State Park", "Camden Hills State Park"],
+      "Maryland": ["Assateague State Park", "Cunningham Falls State Park", "Patapsco Valley State Park"],
+      "Massachusetts": ["Mount Greylock State Reservation", "Nickerson State Park", "Walden Pond State Reservation"],
+      "Michigan": ["Porcupine Mountains Wilderness State Park", "Tahquamenon Falls State Park", "Warren Dunes State Park"],
+      "Minnesota": ["Itasca State Park", "Split Rock Lighthouse State Park", "Tettegouche State Park"],
+      "Mississippi": ["Buccaneer State Park", "Clarkco State Park", "Tishomingo State Park"],
+      "Missouri": ["Bennett Spring State Park", "Johnson's Shut-Ins State Park", "Table Rock State Park"],
+      "Montana": ["Flathead Lake State Park", "Makoshika State Park", "Lewis and Clark Caverns State Park"],
+      "Nebraska": ["Chadron State Park", "Eugene T. Mahoney State Park", "Platte River State Park"],
+      "Nevada": ["Cathedral Gorge State Park", "Great Basin National Park", "Valley of Fire State Park"],
+      "New Hampshire": ["Franconia Notch State Park", "Hampton Beach State Park", "Mount Monadnock State Park"],
+      "New Jersey": ["High Point State Park", "Island Beach State Park", "Wharton State Forest"],
+      "New Mexico": ["Bottomless Lakes State Park", "City of Rocks State Park", "Elephant Butte Lake State Park"],
+      "New York": ["Letchworth State Park", "Niagara Falls State Park", "Watkins Glen State Park"],
+      "North Carolina": ["Chimney Rock State Park", "Mount Mitchell State Park", "Stone Mountain State Park"],
+      "North Dakota": ["Fort Abraham Lincoln State Park", "Icelandic State Park", "Theodore Roosevelt National Park"],
+      "Ohio": ["Hocking Hills State Park", "Maumee Bay State Park", "Salt Fork State Park"],
+      "Oklahoma": ["Beavers Bend State Park", "Robbers Cave State Park", "Roman Nose State Park"],
+      "Oregon": ["Silver Falls State Park", "Smith Rock State Park", "Tryon Creek State Natural Area"],
+      "Pennsylvania": ["Hickory Run State Park", "Ohiopyle State Park", "Ricketts Glen State Park"],
+      "Puerto Rico": ["El Yunque National Forest", "Guanica State Forest"],
+      "Rhode Island": ["Beavertail State Park", "Colt State Park", "Fort Adams State Park"],
+      "South Carolina": ["Caesars Head State Park", "Hunting Island State Park", "Table Rock State Park"],
+      "South Dakota": ["Custer State Park", "Palisades State Park", "Spearfish Canyon State Park"],
+      "Tennessee": ["Burgess Falls State Park", "Fall Creek Falls State Park", "Natchez Trace State Park"],
+      "Texas": ["Big Bend Ranch State Park", "Garner State Park", "Palo Duro Canyon State Park"],
+      "Utah": ["Antelope Island State Park", "Dead Horse Point State Park", "Goblin Valley State Park"],
+      "Vermont": ["Button Bay State Park", "Elmore State Park", "Quechee State Park"],
+      "Virgin Islands": ["Virgin Islands National Park", "Salt River Bay National Historical Park and Ecological Preserve"],
+      "Virginia": ["Grayson Highlands State Park", "Shenandoah River State Park", "Smith Mountain Lake State Park"],
+      "Washington": ["Deception Pass State Park", "Lake Wenatchee State Park", "Mount Spokane State Park"],
+      "West Virginia": ["Babcock State Park", "Blackwater Falls State Park", "Hawks Nest State Park"],
+      "Wisconsin": ["Devil's Lake State Park", "Peninsula State Park", "Wyalusing State Park"],
+      "Wyoming": ["Boysen State Park", "Hot Springs State Park", "Keyhole State Park"]
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const stateSelect = document.getElementById("state-select");
+
+      locationsArray.forEach(location => {
+        const option = document.createElement("option");
+        option.value = location;
+        option.textContent = location;
+        stateSelect.appendChild(option);
+      });
+
+      const parkTypes = ["State Park",];
+      const typeSelect = document.getElementById("type-select");
+
+      parkTypes.forEach(type => {
+        const option = document.createElement("option");
+        option.value = type;
+        option.textContent = type;
+        typeSelect.appendChild(option);
+      });
+    });
+
+    function searchParks() {
+      const state = document.getElementById("state-select").value;
+      const type = document.getElementById("type-select").value;
+      const results = document.getElementById("results");
+
+      if (type === "State Park") {
+        const parks = stateParksArray[state];
+        if (parks) {
+          results.innerHTML = `<h3>${type}s in ${state}:</h3><ul>${parks.map(park => `<li>${park}</li>`).join('')}</ul>`;
+        } else {
+          results.innerHTML = `<h3>No ${type}s found in ${state}</h3>`;
+        }
+      } else {
+        // Handle other park types (dummy implementation)
+        results.innerHTML = `Searching for ${type} in ${state}...`;
+      }
+    }
+  </script>
 </body>
 </html>
