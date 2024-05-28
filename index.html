@@ -9,16 +9,17 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: url('https://media.istockphoto.com/id/1283636755/photo/hiking-in-yosemite-national-park-in-california.jpg?s=612x612&w=0&k=20&c=VoPSq6FloYNc0KDjcnvKG7kAkvbzqsdWJlhLS_E0ogw=') no-repeat center center fixed; /* Update with your image path */
-      background-size: cover;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      color: #fff; /* Ensure text is readable over the background image */
+      background: url('https://www.worldatlas.com/r/w1200/upload/56/c5/7c/shutterstock-520792630.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      transition: background-image 0.5s ease; /* Add transition for smooth background image change */
     }
 
     header {
-      background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for readability */
+      background-color: rgba(0, 0, 0, 0.8);
       color: #fff;
       padding: 1rem 0;
       text-align: center;
@@ -39,11 +40,11 @@
     nav ul li a {
       color: #fff;
       text-decoration: none;
-      transition: transform 0.3s; /* Add transition for smooth scaling */
+      transition: transform 0.3s;
     }
 
     nav ul li a:hover {
-      transform: scale(1.1); /* Scale up by 10% on hover */
+      transform: scale(1.1);
     }
 
     main {
@@ -57,7 +58,7 @@
 
     .hero {
       text-align: center;
-      background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+      background-color: rgba(0, 0, 0, 0.7);
       padding: 2rem;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -69,7 +70,7 @@
     footer {
       text-align: center;
       padding: 1rem 0;
-      background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for readability */
+      background-color: rgba(0, 0, 0, 0.8);
       color: #fff;
     }
   </style>
@@ -82,17 +83,34 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="parks.html">National Parks</a></li>
         <li><a href="mountains.html">Mountains</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
       </ul>
     </nav>
   </header>
   <main>
     <section class="hero">
-      <h2>Welcome to our National Parks and Mountains</h2>
-      <p>Find the best outdoor activities around you.</p>
+      <h2>Welcome to Outdoor Activities Finder</h2>
+      <p>Discover the beauty of nature in our National Parks and Mountains. Start exploring now!</p>
     </section>
   </main>
   <footer>
-    <p>&copy; 2024 Outdoor Activities Finder. All.</p>
+    <p>2024 Outdoor Activities Finder.</p>
   </footer>
+  <script>
+    const backgroundImages = [
+      'https://i.natgeofe.com/n/cfa19a0d-eff0-4628-8fdd-2ad8d66845dd/mountain-range-appenzell-switzerland.jpg',
+      'https://media.cnn.com/api/v1/images/stellar/prod/230727101602-01-crowded-us-national-parks-top.jpg?c=16x9&q=h_833,w_1480,c_fill',
+      'https://i.redd.it/7rzcksicu4m91.jpg'
+    ];
+
+    let currentImageIndex = 0;
+
+    function changeBackgroundImage() {
+      currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+      document.body.style.backgroundImage = `url('${backgroundImages[currentImageIndex]}')`;
+    }
+
+    setInterval(changeBackgroundImage, 5000); // Change image every 1 seconds (3000 milliseconds)
+  </script>
 </body>
 </html>

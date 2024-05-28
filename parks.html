@@ -9,7 +9,8 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f5f5f5;
+      background-image: url('https://media.cnn.com/api/v1/images/stellar/prod/230727101602-01-crowded-us-national-parks-top.jpg?c=16x9&q=h_833,w_1480,c_fill'); /* Replace 'your-image-url.jpg' with your image URL */
+      background-size: cover;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
@@ -102,6 +103,36 @@
       max-width: 600px;
     }
 
+    #results ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #results ul li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    #results ul li img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 1rem;
+      border-radius: 8px;
+    }
+
+    #park-info {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(3, 2, 2, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: left;
+      margin-top: 2rem;
+    }
+
     footer {
       text-align: center;
       padding: 1rem 0;
@@ -118,6 +149,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="parks.html">National Parks</a></li>
         <li><a href="mountains.html">Mountains</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
       </ul>
     </nav>
   </header>
@@ -139,6 +171,11 @@
       </div>
       <div id="results"></div>
     </section>
+
+    <section id="park-info" style="display: none;">
+      <h2>Park Information</h2>
+      <div id="park-details"></div>
+    </section>
   </main>
   <footer>
     <p>2024 Outdoor Activities Finder.</p>
@@ -146,11 +183,7 @@
 
   <script>
     const locationsArray = [
-      "Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California",
-      "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia",
-      "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
-      "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
-      "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+      "Alabama", "Alaska", "American Samoa", "Arizona", "Nevada", "New Hampshire",
       "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
       "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina",
       "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia",
@@ -158,61 +191,87 @@
     ];
 
     const stateParksArray = {
-      "Alabama": ["Cheaha State Park", "DeSoto State Park", "Gulf State Park"],
-      "Alaska": ["Chugach State Park", "Denali State Park", "Kachemak Bay State Park"],
-      "American Samoa": ["Le'ala Shoreline National Natural Landmark", "Ofu Beach"],
-      "Arizona": ["Kartchner Caverns State Park", "Red Rock State Park", "Slide Rock State Park"],
-      "Arkansas": ["Devil's Den State Park", "Petit Jean State Park", "Ozark Folk Center State Park"],
-      "California": ["Anza-Borrego Desert State Park", "Julia Pfeiffer Burns State Park", "Lake Tahoe State Park"],
-      "Colorado": ["Eldorado Canyon State Park", "Golden Gate Canyon State Park", "Roxborough State Park"],
-      "Connecticut": ["Dinosaur State Park", "Gillette Castle State Park", "Sleeping Giant State Park"],
-      "Delaware": ["Cape Henlopen State Park", "Lums Pond State Park", "Trap Pond State Park"],
-      "District of Columbia": ["Rock Creek Park"],
-      "Florida": ["Bahia Honda State Park", "Everglades National Park", "Myakka River State Park"],
-      "Georgia": ["Amicalola Falls State Park", "Cloudland Canyon State Park", "Tallulah Gorge State Park"],
-      "Guam": ["Ritidian Point", "War in the Pacific National Historical Park"],
-      "Hawaii": ["Haleakala National Park", "Hapuna Beach State Recreation Area", "Waimea Canyon State Park"],
-      "Idaho": ["Bruneau Dunes State Park", "Farragut State Park", "Ponderosa State Park"],
-      "Illinois": ["Giant City State Park", "Starved Rock State Park", "White Pines Forest State Park"],
-      "Indiana": ["Brown County State Park", "Indiana Dunes State Park", "Turkey Run State Park"],
-      "Iowa": ["Backbone State Park", "Ledges State Park", "Maquoketa Caves State Park"],
-      "Kansas": ["Cedar Bluff State Park", "Kanopolis State Park", "Wilson State Park"],
-      "Kentucky": ["Cumberland Falls State Resort Park", "Natural Bridge State Resort Park", "Red River Gorge"],
-      "Louisiana": ["Bayou Segnette State Park", "Chicot State Park", "Lake Fausse Pointe State Park"],
-      "Maine": ["Acadia National Park", "Baxter State Park", "Camden Hills State Park"],
-      "Maryland": ["Assateague State Park", "Cunningham Falls State Park", "Patapsco Valley State Park"],
-      "Massachusetts": ["Mount Greylock State Reservation", "Nickerson State Park", "Walden Pond State Reservation"],
-      "Michigan": ["Porcupine Mountains Wilderness State Park", "Tahquamenon Falls State Park", "Warren Dunes State Park"],
-      "Minnesota": ["Itasca State Park", "Split Rock Lighthouse State Park", "Tettegouche State Park"],
-      "Mississippi": ["Buccaneer State Park", "Clarkco State Park", "Tishomingo State Park"],
-      "Missouri": ["Bennett Spring State Park", "Johnson's Shut-Ins State Park", "Table Rock State Park"],
-      "Montana": ["Flathead Lake State Park", "Makoshika State Park", "Lewis and Clark Caverns State Park"],
-      "Nebraska": ["Chadron State Park", "Eugene T. Mahoney State Park", "Platte River State Park"],
-      "Nevada": ["Cathedral Gorge State Park", "Great Basin National Park", "Valley of Fire State Park"],
-      "New Hampshire": ["Franconia Notch State Park", "Hampton Beach State Park", "Mount Monadnock State Park"],
-      "New Jersey": ["High Point State Park", "Island Beach State Park", "Wharton State Forest"],
-      "New Mexico": ["Bottomless Lakes State Park", "City of Rocks State Park", "Elephant Butte Lake State Park"],
-      "New York": ["Letchworth State Park", "Niagara Falls State Park", "Watkins Glen State Park"],
-      "North Carolina": ["Chimney Rock State Park", "Mount Mitchell State Park", "Stone Mountain State Park"],
-      "North Dakota": ["Fort Abraham Lincoln State Park", "Icelandic State Park", "Theodore Roosevelt National Park"],
-      "Ohio": ["Hocking Hills State Park", "Maumee Bay State Park", "Salt Fork State Park"],
-      "Oklahoma": ["Beavers Bend State Park", "Robbers Cave State Park", "Roman Nose State Park"],
-      "Oregon": ["Silver Falls State Park", "Smith Rock State Park", "Tryon Creek State Natural Area"],
-      "Pennsylvania": ["Hickory Run State Park", "Ohiopyle State Park", "Ricketts Glen State Park"],
-      "Puerto Rico": ["El Yunque National Forest", "Guanica State Forest"],
-      "Rhode Island": ["Beavertail State Park", "Colt State Park", "Fort Adams State Park"],
-      "South Carolina": ["Caesars Head State Park", "Hunting Island State Park", "Table Rock State Park"],
-      "South Dakota": ["Custer State Park", "Palisades State Park", "Spearfish Canyon State Park"],
-      "Tennessee": ["Burgess Falls State Park", "Fall Creek Falls State Park", "Natchez Trace State Park"],
-      "Texas": ["Big Bend Ranch State Park", "Garner State Park", "Palo Duro Canyon State Park"],
-      "Utah": ["Antelope Island State Park", "Dead Horse Point State Park", "Goblin Valley State Park"],
-      "Vermont": ["Button Bay State Park", "Elmore State Park", "Quechee State Park"],
-      "Virgin Islands": ["Virgin Islands National Park", "Salt River Bay National Historical Park and Ecological Preserve"],
-      "Virginia": ["Grayson Highlands State Park", "Shenandoah River State Park", "Smith Mountain Lake State Park"],
-      "Washington": ["Deception Pass State Park", "Lake Wenatchee State Park", "Mount Spokane State Park"],
-      "West Virginia": ["Babcock State Park", "Blackwater Falls State Park", "Hawks Nest State Park"],
-      "Wisconsin": ["Devil's Lake State Park", "Peninsula State Park", "Wyalusing State Park"],
-      "Wyoming": ["Boysen State Park", "Hot Springs State Park", "Keyhole State Park"]
+      "Alabama": [
+        { name: "there is no park", img: "images/cheaha.jpg" },
+      ],
+      "Alaska": [
+        { name: "Chugach State Park", img: "https://www.tu.org/wp-content/uploads/2019/10/TU-BrandonHill-27.jpg" },
+      ],
+      "American Samoa": [
+        { name: "Le'ala Shoreline National Natural Landmark", img: "https://amsamfam.com/wp-content/uploads/2019/11/Cyclone-Gita-Walking-1024x769.jpg" },
+      ],
+      "Arizona": [
+        { name: "Kartchner Caverns State Park", img: "https://www.visitarizona.com/imager/files_idss_com/C375/2e3f73ca-3fa6-4367-a2bf-5ddf244f3d8c_70e0b117ab6f15d516450a3495868467.jpg" },
+      ],
+      "Washington": [
+        { name: "Kartchner Caverns State Park", img: "https://images.seattletimes.com/wp-content/uploads/2023/08/08032023_NP_075604.jpg?d=780x520" }
+      ],
+      "New York": [
+        { name: "Letchworth State Park", img: "https://letchworthpark.com/wp-content/uploads/2021/05/69F7E161-D5ED-461D-BB13-01B4C7BF2D51-394x221.jpeg" }
+      ],
+      "New Mexico": [
+        { name: "Bottomless Lakes State Park", img: "https://www.travelandleisure.com/thmb/BgrjHEfoo0Xx5GlE_bPP1iKsqpw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/landscape-bottomless-lakes-state-park-new-mexico-BOTTOMLESS0717-8da95ff44da94f2aa761d89e0903b7c3.jpg" }
+      ],
+      "New Jersey": [
+        { name: "High Point State Park", img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/71/fb/59/high-point-state-park.jpg?w=1200&h=1200&s=1" }
+      ],
+      "Oklahoma": [
+        { name: "Beavers Bend State Park", img: "https://d1pk12b7bb81je.cloudfront.net/thumbor/bOGTTz4TSte8HuKO9gXo2DxgW4o=/full-fit-in/800x800/https://d1pk12b7bb81je.cloudfront.net/okdataengine/appmedia/images/137/137595/BB_Summer1.jpeg.jpg" }
+      ],
+      "Oregon": [
+        { name: "Silver Falls State Park", img: "https://a-tuscanestate.com/wp-content/uploads/2021/06/shutterstock_1515138224.jpg" }
+      ],
+      "Puerto Rico": [
+        { name: "El Yunque National Forest", img: "https://welcome.topuertorico.org/postcard/cards/mhbritbg.jpg" }
+      ],
+      "Rhode Island": [
+        { name: "Beavertail State Park", img: "https://i1.wp.com/whatsupnewp.com/wp-content/uploads/2018/08/image002-1.jpg?fit=674%2C465&ssl=1" }
+      ],
+      "South Carolina": [
+        { name: "Caesars Head State Park", img: "https://img1.10bestmedia.com/Images/Photos/214641/p-caesars-head-overlook_55_660x440_201405311204.JPG" }
+      ],
+      "South Dakota": [
+        { name: "Custer State Park", img: "https://www.travelsouthdakota.com/sites/default/files/styles/panel_slideshow_xsmall/public/2019-05/family-hiking-custer-state-park-needles-00232-opt.jpg?h=fab29234&itok=kkF5yMou" }
+      ],
+      "Utah": [
+        { name: "Antelope Island State Park", img: "https://visitutahkenticoprod.blob.core.windows.net/cmsroot/visitutah/media/site-assets/three-season-photography/northern-utah/frary-peak-hi-res-copy-(1).jpg" }
+      ],
+      "Vermont": [
+        { name: "Button Bay State Park", img: "https://www.campsitephotos.com/imgs//csp-on-the-road/ice-cream-man/Button-Bay-Campground-1.jpg" }
+      ],
+      "Virgin Islands": [
+        { name: "Virgin Islands National Park (St. John)", img: "https://a.travel-assets.com/findyours-php/viewfinder/images/res70/117000/117134-St-John.jpg" }
+      ],
+      "West Virginia": [
+        { name: "Babcock State Park", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzQs2HmoMGoYjCkrVMUTXyPxZNOG1Pgkxa6RI7Buxe3Q&s" }
+      ],
+      "Wisconsin": [
+        { name: "Devil's Lake State Park", img: "https://widnr.widen.net/content/bp70qpt8sf/jpeg/036-Couple-Admiring-Scenery-by-Devils-Doorway-at-Devils-Lake-State-Park.jpg?w=568&h=378&keep=c&crop=yes&quality=80&x.app=portals" }
+      ],
+      "Wyoming": [
+        { name: "Boysen State Park", img: "https://photos.thedyrt.com/photo/897147/media/boysen-state-park-wy_58e872e1-17a4-42bd-be47-2c79abc40fa5.jpg" }
+      ],
+      "Texas": [
+        { name: "Kartchner Caverns State Park", img: "https://www.americansouthwest.net/texas/photographs700/cactus-ravine.jpg" }
+      ],
+      "New Hampshire": [
+        { name: "Franconia Notch State Park", img: "https://blog-assets.thedyrt.com/uploads/2018/09/shutterstock_1144868828-1-e1544722900181.jpg" }
+      ],
+      "Nevada": [
+        { name: "Valley of Fire State Park", img: "https://i0.wp.com/www.yourhikeguide.com/wp-content/uploads/Arch-Rock-edited.jpg" }
+      ],
+      "Ohio": [
+        { name: "Maumee Bay State Park", img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/03/f7/38/83/maumee-bay-state-park.jpg?w=1200&h=1200&s=1" }
+      ],
+      "North Dakota": [
+        { name: "Theodore Roosevelt National Park", img: "https://forsomethingmore.com/wp-content/uploads/2020/09/Theodore-Roosevelt-National-Park-With-Kids-COVER.jpg" }
+      ],
+      "North Carolina": [
+        { name: "Great Smoky Mountains National Park", img: "https://national-park.com/wp-content/uploads/2016/04/Welcome-to-Great-Smoky-Mountains-National-Park.jpg" }
+      ],
+
+
+      // Add other states and parks similarly
     };
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -225,7 +284,7 @@
         stateSelect.appendChild(option);
       });
 
-      const parkTypes = ["State Park",];
+      const parkTypes = ["State Park"];
       const typeSelect = document.getElementById("type-select");
 
       parkTypes.forEach(type => {
@@ -244,7 +303,12 @@
       if (type === "State Park") {
         const parks = stateParksArray[state];
         if (parks) {
-          results.innerHTML = `<h3>${type}s in ${state}:</h3><ul>${parks.map(park => `<li>${park}</li>`).join('')}</ul>`;
+          results.innerHTML = `<h3>${type}s in ${state}:</h3><ul>${parks.map(park => `
+            <li>
+              <img src="${park.img}" alt="${park.name}">
+              ${park.name}
+            </li>
+          `).join('')}</ul>`;
         } else {
           results.innerHTML = `<h3>No ${type}s found in ${state}</h3>`;
         }
@@ -254,5 +318,6 @@
       }
     }
   </script>
+  
 </body>
 </html>

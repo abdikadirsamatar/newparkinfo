@@ -12,7 +12,9 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      background-color: #f5f5f5;
+      background-image: url('https://i.natgeofe.com/n/cfa19a0d-eff0-4628-8fdd-2ad8d66845dd/mountain-range-appenzell-switzerland.jpg'); /* Replace 'your-image-url.jpg' with your image URL */
+      background-size: cover;
+      background-position: center;
     }
 
     header {
@@ -49,7 +51,7 @@
     }
 
     #mountain-info {
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.8);
       padding: 2rem;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -78,7 +80,17 @@
       width: 100%;
       max-width: 300px;
       border-radius: 4px;
-      border: 1px solid #ccc;
+      border: 1px solid #101010;
+    }
+
+    .search button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #000000;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
 
     #mountain-details {
@@ -104,6 +116,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="parks.html">National Parks</a></li>
         <li><a href="mountains.html">Mountains</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
       </ul>
     </nav>
   </header>
@@ -115,12 +128,147 @@
         <select id="mountain-select">
           <!-- Mountain options will be populated by JavaScript -->
         </select>
+        <button id="search-button">Search</button>
         <div id="mountain-details"></div>
       </div>
     </section>
   </main>
   <footer>
-    <p>&copy; 2024 Outdoor Activities Finder. All rights reserved.</p>
+    <p> 2024 Outdoor Activities Finder.</p>
   </footer>
+
+  <script>
+    const mountains = [
+    {
+        name: "Denali",
+        state: "AK",
+        elevation: "20,310 feet",
+        description: "The highest mountain peak in North America.",
+        imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c6/Every_Road-_Denali_%287945497984%29.jpg"
+      },
+      {
+        name: "Humphreys Peak",
+        state: "AZ",
+        elevation: "12,633 feet",
+        description: "Highest peak in Arizona, part of the San Francisco Peaks.",
+        imageUrl: "https://fatmap-digitiser-assets.imgix.net/95e13b5f-3a07-4086-bb7f-2cc3b4aed110?w=1000&fit=crop&auto=compress%2Cformat"
+      },
+      {
+      name: "Mount Whitney",
+      state: "CA",
+      elevation: "14,505 feet",
+      description: "The highest summit in the contiguous United States.",
+      imageUrl: "https://www.topozone.com/wp-content/uploads/2015/12/bigs-Mt-Whitney-California-at-Sunrise-from-the-east-153587384-Large.jpg"
+    },
+    {
+      name: "Pikes Peak",
+      state: "CO",
+      elevation: "14,115 feet",
+      description: "A prominent mountain in the Front Range of the Rocky Mountains.",
+      imageUrl: "https://mlwd5nbv8uri.i.optimole.com/cb:1OS-.5fb6c/w:1500/h:996/q:mauto/f:best/ig:avif/https://www.pikes-peak.com/wp-content/uploads/Winter-in-Colorado-Springs-PP-GOGjpg.jpg"
+    },
+    {
+      name: "Mount Elbert",
+      state: "CO",
+      elevation: "14,440 feet",
+      description: "The highest summit of the Rocky Mountains of North America.",
+      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRouBJaFm0eEqXqFynBgThSyOnPjBE2pZoMC77orqXGpg&s"
+    },
+    {
+      name: "Mount Katahdin",
+      state: "ME",
+      elevation: "5,269 feet",
+      description: "The highest mountain in Maine and the northern terminus of the Appalachian Trail.",
+      imageUrl: "https://img.atlasobscura.com/HiigqgdKsuDnGLXE9nsMQeLVWblN7N1CuPogTt-GUsg/rt:fit/w:600/q:81/sm:1/scp:1/ar:1/aHR0cHM6Ly9hdGxh/cy1kZXYuczMuYW1h/em9uYXdzLmNvbS91/cGxvYWRzL3BsYWNl/X2ltYWdlcy80MmQy/MTlkY2M3NjNiYjBl/ODlfNzYxNTYzMjMy/X2YzYjFiYTI4OGZf/by5qcGc.jpg"
+    },
+    {
+      name: "Mount Hood",
+      state: "OR",
+      elevation: "11,240 feet",
+      description: "A potentially active stratovolcano in the Cascade Range.",
+      imageUrl: "https://oregonwild.org/sites/default/files/Hood%20John%20Gaudette%20%20(1200%20%C3%97%20675%20px).png"
+    },
+    {
+      name: "Mount Rainier",
+      state: "WA",
+      elevation: "14,411 feet",
+      description: "The highest mountain in Washington and the Cascade Range.",
+      imageUrl: "https://i.natgeofe.com/n/6e6d2eea-06d3-4ac4-94ca-2aba6f7f8757/mountain-pine-trees.jpg"
+    },
+    {
+      name: "Mount Marcy",
+      state: "NY",
+      elevation: "5,343 feet",
+      description: "The highest point in New York State.",
+      imageUrl: "https://images.squarespace-cdn.com/content/v1/582240a6b3db2b3391b1def2/1595542841254-K1SHX4DWSC3TRG6OVNQX/Adirondacks-2018-web-103-Mount-Marcy.jpg"
+    },
+    {
+      name: "Mount Mitchell",
+      state: "NC",
+      elevation: "6,684 feet",
+      description: "The highest peak of the Appalachian Mountains.",
+      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Mount_Mitchell1.jpg/1200px-Mount_Mitchell1.jpg"
+    },
+    {
+      name: "Guadalupe Peak",
+      state: "TX",
+      elevation: "8,751 feet",
+      description: "The highest natural point in Texas.",
+      imageUrl: "https://res.cloudinary.com/sagacity/image/upload/c_crop,h_3024,w_4032,x_0,y_0/c_limit,dpr_auto,f_auto,fl_lossy,q_80,w_1080/File_029_f6ugfk.jpg"
+    },
+    {
+      name: "Gannett Peak",
+      state: "WY",
+      elevation: "13,809 feet",
+      description: "The highest peak in Wyoming.",
+      imageUrl: "https://cdn.jacksonholenet.com/images/content/14602_PIvlu_Highest_Peak_in_Wyoming_lg.jpg"
+    },
+    {
+      name: "Mount Washington",
+      state: "NH",
+      elevation: "6,288 feet",
+      description: "The highest peak in the Northeastern United States.",
+      imageUrl: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/ea/9f/59/mount-washington-state.jpg?w=1200&h=-1&s=1"
+    },
+    {
+      name: "Mauna Kea",
+      state: "HI",
+      elevation: "13,803 feet",
+      description: "A dormant volcano on the island of Hawaii.",
+      imageUrl: "https://i0.wp.com/www.sciencenews.org/wp-content/uploads/2020/05/051420_CG_volcano_feat.jpg"
+    },
+
+
+      // Add other mountains similarly
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const mountainSelect = document.getElementById("mountain-select");
+      const searchButton = document.getElementById("search-button");
+
+      mountains.forEach(mountain => {
+        const option = document.createElement("option");
+        option.value = mountain.name;
+        option.textContent = mountain.name;
+        mountainSelect.appendChild(option);
+      });
+
+      searchButton.addEventListener("click", () => {
+        const selectedMountain = mountains.find(mountain => mountain.name === mountainSelect.value);
+        displayMountainDetails(selectedMountain);
+      });
+    });
+
+    function displayMountainDetails(mountain) {
+      const mountainDetails = document.getElementById("mountain-details");
+      mountainDetails.innerHTML = `
+        <h3>${mountain.name}</h3>
+        <img src="${mountain.imageUrl}" alt="${mountain.name}" style="max-width: 100%; height: auto;">
+        <p><strong>State:</strong> ${mountain.state}</p>
+        <p><strong>Elevation:</strong> ${mountain.elevation}</p>
+        <p><strong>Description:</strong> ${mountain.description}</p>
+      `;
+    }
+  </script>
 </body>
 </html>

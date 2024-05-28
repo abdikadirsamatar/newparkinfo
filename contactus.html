@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-image: url('https://i.redd.it/7rzcksicu4m91.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      padding: 20px;
+      border-radius: 8px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    textarea {
+      height: 150px;
+    }
+    input[type="submit"] {
+      background-color: #000000;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+    input[type="submit"]:hover {
+      background-color: #333333;
+    }
+    header {
+      background-color: #000000;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav {
+      text-align: center;
+      margin-top: 10px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin: 0 5px;
+    }
+    nav a:hover {
+      background-color: #333333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="parks.html">National Parks</a>
+      <a href="mountains.html">Mountains</a>
+      <a href="contactus.html">Contact Us</a>
+    </nav>
+  </header>
+  <section>
+    <div class="container">
+      <h1>Contact Us</h1>
+      <form action="#" method="post" id="contact-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </section>
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      // You can add your form submission logic here
+      // For example, you can use fetch to send form data to a server
+      // Replace 'your-api-endpoint' with the actual endpoint URL
+      fetch('your-api-endpoint', {
+        method: 'POST',
+        body: new FormData(event.target)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Form submitted successfully!");
+          // Optionally, reset the form after successful submission
+          event.target.reset();
+        } else {
+          alert("Error submitting form. Please try again later.");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("Error submitting form. Please try again later.");
+      });
+    });
+  </script>
+</body>
+</html>
